@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vahe Babasyan — CTO & Unity Team Lead</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@300;400;600;800&family=Geist+Mono:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-deep: #08090c;
+            --bg: #0c0e14;
+            --bg-panel: #111520;
+            --bg-card: #151a28;
+            --bg-hover: #1a2035;
+            --border: #1e2540;
+            --border-active: #2d3a60;
+            --text: #d4daf0;
+            --text-dim: #7a84a0;
+            --text-muted: #4a5270;
+            --accent: #3bf0e4;
+            --accent-dim: rgba(59, 240, 228, 0.08);
+            --accent-glow: rgba(59, 240, 228, 0.15);
+            --accent2: #f0a03b;
+            --accent2-dim: rgba(240, 160, 59, 0.1);
+            --unity-blue: #4a90d9;
+            --success: #3bf07a;
+            --font-display: 'Anybody', sans-serif;
+            --font-body: 'Source Serif 4', Georgia, serif;
+            --font-mono: 'Geist Mono', monospace;
+            --radius: 8px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-deep);
+            color: var(--text);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+        }
+
+        ::selection { background: var(--accent); color: var(--bg-deep); }
+
+        a { color: var(--accent); text-decoration: none; transition: 0.3s; }
+        a:hover { color: #6ff5ec; text-shadow: 0 0 12px var(--accent-glow); }
+
+        /* ─── Canvas BG ─── */
+        #particles-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ─── Scanline overlay ─── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.03) 2px,
+                rgba(0,0,0,0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .page-wrapper { position: relative; z-index: 1; }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(16px) saturate(120%);
+            background: rgba(8, 9, 12, 0.75);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        .nav-unity-cube {
+            width: 28px; height: 28px;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            display: grid;
+            place-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent);
+            transform: rotate(45deg);
+            transition: all 0.4s ease;
+        }
+        .nav-unity-cube span { transform: rotate(-45deg); }
+        .nav-unity-cube:hover {
+            background: var(--accent-dim);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .nav-name {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 400;
+            color: var(--text-dim);
+        }
+        .nav-name strong { color: var(--text); font-weight: 500; }
+
+        .nav-links {
+            display: flex;
+            gap: 0.3rem;
+            list-style: none;
+        }
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+            border-color: var(--border);
+            background: var(--accent-dim);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .nav-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--success);
+        }
+        .status-dot {
+            width: 6px; height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: var(--text-dim);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 3rem 5rem;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--accent);
+            padding: 0.5rem 1.2rem;
+            background: var(--accent-dim);
+            border: 1px solid rgba(59, 240, 228, 0.15);
+            border-radius: 100px;
+            width: fit-content;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.3s forwards;
+        }
+        .hero-badge::before {
+            content: '▸';
+            color: var(--accent);
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.8rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.5s forwards;
+        }
+        .hero h1 .line-accent {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero h1 .line-dim {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .hero-body {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.7s forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 1px;
+            background: var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            width: fit-content;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.9s forwards;
+        }
+
+        .stat {
+            background: var(--bg-panel);
+            padding: 1.5rem 2.5rem;
+            text-align: center;
+        }
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.3rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2.5rem;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 1.1s forwards;
+        }
+
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg-deep);
+            border-color: var(--accent);
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background: #6ff5ec;
+            color: var(--bg-deep);
+            box-shadow: 0 4px 30px var(--accent-glow);
+        }
+
+        /* ─── SECTION ─── */
+        section { padding: 5rem 3rem; max-width: 1200px; margin: 0 auto; }
+
+        .s-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3.5rem;
+        }
+        .s-num {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--bg-deep);
+            background: var(--accent);
+            width: 28px; height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .s-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .s-line { flex: 1; height: 1px; background: var(--border); }
+
+        /* ─── ABOUT ─── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            color: var(--text-dim);
+        }
+        .about-text p { margin-bottom: 1.2rem; }
+        .about-text strong { color: var(--text); font-weight: 600; }
+        .about-text .highlight {
+            color: var(--accent);
+            font-weight: 400;
+        }
+
+        .about-panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.8rem 1.2rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+        .panel-dots {
+            display: flex;
+            gap: 5px;
+        }
+        .panel-dots span {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+        }
+        .panel-dots .d1 { background: #f55; }
+        .panel-dots .d2 { background: #fc3; }
+        .panel-dots .d3 { background: #5f5; }
+
+        .panel-body { padding: 1.5rem; }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.85rem 0;
+            border-bottom: 1px solid rgba(30, 37, 64, 0.6);
+            font-size: 0.88rem;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-key {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .info-val { color: var(--text); font-weight: 400; }
+
+        .cert-list {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .cert-label {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.8rem;
+        }
+        .cert-item {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .cert-item::before {
+            content: '✦';
+            color: var(--accent2);
+            font-size: 0.6rem;
+        }
+
+        /* ─── EXPERIENCE ─── */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), var(--border) 30%, var(--border) 70%, transparent);
+        }
+
+        .t-company {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .t-company:last-child { margin-bottom: 0; }
+
+        .t-company-header {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .t-company-header:hover {
+            border-color: var(--border-active);
+            background: var(--bg-card);
+        }
+        .t-company-header.active {
+            border-color: var(--accent);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .t-dot {
+            position: absolute;
+            left: -2.65rem;
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: var(--bg-deep);
+            border: 2px solid var(--accent);
+            z-index: 2;
+        }
+        .t-company-header.active .t-dot { background: var(--accent); }
+
+        .t-co-info { flex: 1; }
+        .t-co-name {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .t-co-period {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+        .t-co-toggle {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+        .t-company-header.active .t-co-toggle { transform: rotate(180deg); }
+
+        .t-roles {
+            display: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-bottom-left-radius: var(--radius);
+            border-bottom-right-radius: var(--radius);
+            padding: 0.5rem;
+        }
+        .t-roles.open { display: block; }
+
+        .t-role {
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            transition: background 0.3s ease;
+        }
+        .t-role:last-child { margin-bottom: 0; }
+        .t-role:hover { background: var(--bg-hover); }
+
+        .t-role-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .t-role-period {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .t-achievements {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        .t-achievements li {
+            position: relative;
+            padding-left: 1.2rem;
+            font-size: 0.88rem;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .t-achievements li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+        }
+        .t-achievements .metric {
+            color: var(--accent2);
+            font-weight: 600;
+        }
+
+        .t-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            padding: 0.25rem 0.7rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 4px;
+            border: 1px solid rgba(59, 240, 228, 0.1);
+        }
+
+        /* ─── SKILLS ─── */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.8rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .skill-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+        .skill-card:hover::before { opacity: 1; }
+
+        .sk-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            background: var(--accent-dim);
+            border: 1px solid rgba(59, 240, 228, 0.12);
+        }
+        .sk-icon.warm {
+            background: var(--accent2-dim);
+            border-color: rgba(240, 160, 59, 0.12);
+        }
+
+        .sk-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .sk-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+        .sk-pill {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            padding: 0.22rem 0.6rem;
+            background: rgba(30, 37, 64, 0.6);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        .sk-pill:hover {
+            color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        /* ─── PROJECTS ─── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+        }
+
+        .proj-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        .proj-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .proj-top {
+            padding: 0.8rem 1.2rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .proj-type {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .proj-badge {
+            font-family: var(--font-mono);
+            font-size: 0.62rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            background: var(--accent2-dim);
+            color: var(--accent2);
+            border: 1px solid rgba(240, 160, 59, 0.15);
+        }
+
+        .proj-body { padding: 1.8rem; }
+        .proj-name {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+        .proj-desc {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        /* ─── CONTACT ─── */
+        .contact-section {
+            text-align: center;
+            padding: 6rem 3rem 4rem;
+        }
+
+        .contact-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+        .contact-title .grad {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-sub {
+            color: var(--text-dim);
+            font-size: 1.05rem;
+            max-width: 480px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .contact-grid {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .c-btn {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            padding: 0.8rem 1.8rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            background: var(--bg-panel);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .c-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+        .c-btn.main {
+            background: var(--accent);
+            color: var(--bg-deep);
+            border-color: var(--accent);
+            font-weight: 500;
+        }
+        .c-btn.main:hover {
+            background: #6ff5ec;
+            color: var(--bg-deep);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 3rem;
+            border-top: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+        footer .award {
+            color: var(--accent2);
+            margin-top: 0.4rem;
+            display: block;
+        }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 0.8rem 1.2rem; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; right: 0;
+                flex-direction: column;
+                background: var(--bg-panel);
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+                gap: 0.3rem;
+            }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: flex; }
+            .nav-status { display: none; }
+
+            .hero { padding: 7rem 1.5rem 3rem; }
+            section { padding: 3.5rem 1.5rem; }
+            .hero-stats { flex-wrap: wrap; }
+            .stat { padding: 1rem 1.5rem; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .contact-section { padding: 4rem 1.5rem 3rem; }
+            .timeline { padding-left: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<div class="page-wrapper">
+
+<!-- NAV -->
+<nav>
+    <div class="nav-brand">
+        <div class="nav-unity-cube"><span>VB</span></div>
+        <div class="nav-name"><strong>Vahe</strong> Babasyan</div>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-status"><span class="status-dot"></span> Open to opportunities</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-badge">CTO & Unity Team Lead — Gora Games</div>
+    <h1>
+        <span class="line-accent">Vahe Babasyan</span><br>
+        <span class="line-dim">Shipping games that</span><br>
+        millions play
+    </h1>
+    <p class="hero-body">
+        CTO and Unity Team Lead with 8+ years building mobile games. 
+        Currently leading development on Playoff — a real-money skill-based 
+        gaming platform on iOS and Android.
+    </p>
+    <div class="hero-stats">
+        <div class="stat">
+            <div class="stat-value">8+</div>
+            <div class="stat-label">Years</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">40+</div>
+            <div class="stat-label">Games Shipped</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">4M+</div>
+            <div class="stat-label">Downloads</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value">50+</div>
+            <div class="stat-label">A/B Tests</div>
+        </div>
+    </div>
+    <div class="hero-cta">
+        <a href="mailto:vahe.babasyan.1994@gmail.com" class="btn btn-primary">✉ Get in Touch</a>
+        <a href="https://github.com/Vah94/" class="btn" target="_blank">↗ GitHub</a>
+        <a href="https://www.linkedin.com/in/vahe-babasyan-442445127/" class="btn" target="_blank">↗ LinkedIn</a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+    <div class="s-header reveal">
+        <span class="s-num">01</span>
+        <h2 class="s-title">About</h2>
+        <div class="s-line"></div>
+    </div>
+    <div class="about-grid">
+        <div class="about-text reveal">
+            <p>
+                I'm a <strong>CTO and Unity Team Lead</strong> at <span class="highlight">Gora Games</span>,
+                where I lead client-side development for a real-money skill-based gaming platform 
+                serving millions of active players on iOS and Android.
+            </p>
+            <p>
+                Previously scaled game studios from concept to live operations, shipping 
+                <strong>40+ mobile titles</strong> across casual, merge, match-3, and hypercasual genres.
+                I've grown teams from 2 to 8+ engineers and built everything from 
+                monetization frameworks to CI/CD pipelines.
+            </p>
+            <p>
+                I thrive at the intersection of <strong>clean code, engaging gameplay, and business impact</strong> — 
+                making hard technical calls while shipping games that players love and that generate revenue.
+            </p>
+        </div>
+        <div class="about-panel reveal">
+            <div class="panel-header">
+                <div class="panel-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+                profile.config
+            </div>
+            <div class="panel-body">
+                <div class="info-row">
+                    <span class="info-key">location</span>
+                    <span class="info-val">Yerevan, Armenia</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">role</span>
+                    <span class="info-val">Sr. Unity Dev, Team Lead</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">company</span>
+                    <span class="info-val">Gora Games</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">languages</span>
+                    <span class="info-val">EN • RU • HY • CZ</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">education</span>
+                    <span class="info-val">B.Sc IT — European Univ. of Armenia</span>
+                </div>
+                <div class="cert-list">
+                    <div class="cert-label">Certifications & Awards</div>
+                    <div class="cert-item">Foundations of Project Management</div>
+                    <div class="cert-item">Agile Project Management</div>
+                    <div class="cert-item">RA State Educational Award — 1st Place</div>
+                    <div class="cert-item">Best Bachelor in IT Field</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+    <div class="s-header reveal">
+        <span class="s-num">02</span>
+        <h2 class="s-title">Experience</h2>
+        <div class="s-line"></div>
+    </div>
+    <div class="timeline">
+
+        <!-- Gora Games -->
+        <div class="t-company reveal">
+            <div class="t-company-header active" onclick="toggleRoles(this)">
+                <div class="t-dot"></div>
+                <div class="t-co-info">
+                    <div class="t-co-name">Gora Games</div>
+                    <div class="t-co-period">Aug 2024 — Present · Yerevan</div>
+                </div>
+                <div class="t-co-toggle">▾</div>
+            </div>
+            <div class="t-roles open">
+                <div class="t-role">
+                    <div class="t-role-title">Senior Unity Developer, Team Lead</div>
+                    <div class="t-role-period">Aug 2024 — Present</div>
+                    <ul class="t-achievements">
+                        <li>Leading Unity development for a real-money skill-based gaming platform serving millions of active players</li>
+                        <li>Architected cross-app promotion system using deep linking — <span class="metric">+25% cross-app user acquisition</span></li>
+                        <li>Built A/B testing framework with Unity Remote Config — <span class="metric">50+ experiments</span> with data-driven feature rollouts</li>
+                        <li>Designed promotional game mechanics with server-side tracking — <span class="metric">+18% first-session conversion</span></li>
+                        <li>Created CI/CD pipeline with GitHub Actions — <span class="metric">deployment time 1hr → 20min</span></li>
+                        <li>Integrated ad mediation + Firebase Analytics with <span class="metric">120+ custom events</span></li>
+                        <li>Established Jira-GitHub integration — <span class="metric">+30% sprint velocity</span></li>
+                        <li>Lead team of 3 developers with agile sprints, code reviews, and mentorship</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">AppLovin MAX</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">Deep Linking</span>
+                        <span class="tag">Jira</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stealth Startup -->
+        <div class="t-company reveal">
+            <div class="t-company-header" onclick="toggleRoles(this)">
+                <div class="t-dot"></div>
+                <div class="t-co-info">
+                    <div class="t-co-name">Stealth Startup</div>
+                    <div class="t-co-period">Sep 2022 — Aug 2024 · 2 years</div>
+                </div>
+                <div class="t-co-toggle">▾</div>
+            </div>
+            <div class="t-roles">
+                <div class="t-role">
+                    <div class="t-role-title">CTO</div>
+                    <div class="t-role-period">Sep 2022 — Aug 2024</div>
+                    <ul class="t-achievements">
+                        <li>Led technical strategy and built the engineering org from scratch for an AI-powered sports analytics platform</li>
+                        <li>Architected real-time data processing pipeline for live sports tracking — <span class="metric">sub-second latency</span></li>
+                        <li>Designed AI-driven analytics algorithms for player performance prediction</li>
+                        <li>Built scalable cloud infrastructure — <span class="metric">10K+ concurrent users, 99.9% uptime</span></li>
+                        <li>Established engineering best practices: code reviews, CI/CD, automated testing, documentation</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">AWS/GCP</span>
+                        <span class="tag">ML/AI</span>
+                        <span class="tag">Real-time Processing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Epic -->
+        <div class="t-company reveal">
+            <div class="t-company-header" onclick="toggleRoles(this)">
+                <div class="t-dot"></div>
+                <div class="t-co-info">
+                    <div class="t-co-name">Next Epic</div>
+                    <div class="t-co-period">Dec 2017 — Dec 2023 · 6 years</div>
+                </div>
+                <div class="t-co-toggle">▾</div>
+            </div>
+            <div class="t-roles">
+                <div class="t-role">
+                    <div class="t-role-title">Senior Unity Developer → Team Lead → CTO</div>
+                    <div class="t-role-period">Mar 2021 — Dec 2023</div>
+                    <ul class="t-achievements">
+                        <li>Promoted from Team Lead to CTO, driving technical strategy and scaling game operations</li>
+                        <li>Increased 30-day retention by <span class="metric">+22%</span> through data-driven LiveOps</li>
+                        <li>Built monetization framework (IAP + ad mediation) — <span class="metric">+35% ARPDAU</span></li>
+                        <li>Achieved <span class="metric">+40% improvement in user acquisition</span> through optimized UA campaigns and ASO</li>
+                        <li>Designed modular game architecture with ScriptableObjects — <span class="metric">50% faster feature dev</span></li>
+                        <li>Integrated full Firebase stack: Analytics (200+ events), Remote Config (100+ A/B tests), FCM (18% push engagement)</li>
+                        <li>Led integration of 15+ third-party SDKs</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">ScriptableObjects</span>
+                        <span class="tag">State Machines</span>
+                        <span class="tag">DI Patterns</span>
+                    </div>
+                </div>
+                <div class="t-role">
+                    <div class="t-role-title">Senior Unity Developer, Team Lead</div>
+                    <div class="t-role-period">Mar 2020 — Feb 2021</div>
+                    <ul class="t-achievements">
+                        <li>Shipped match-3 game — <span class="metric">1M+ downloads, 4.5★ rating</span></li>
+                        <li>Managed team of 3 developers, delivering 12 releases on schedule</li>
+                        <li>Optimized VFX for stable <span class="metric">60 FPS on 2GB RAM devices</span></li>
+                        <li>Reduced draw calls by <span class="metric">60%</span> through sprite atlasing and dynamic batching</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Unity Profiler</span>
+                        <span class="tag">Particle Systems</span>
+                        <span class="tag">Dynamic Resolution</span>
+                        <span class="tag">Sprite Atlasing</span>
+                    </div>
+                </div>
+                <div class="t-role">
+                    <div class="t-role-title">Middle Unity Developer</div>
+                    <div class="t-role-period">Jul 2018 — Feb 2020</div>
+                    <ul class="t-achievements">
+                        <li>Shipped <span class="metric">15+ hypercasual games</span> with combined 3M+ downloads</li>
+                        <li>Successfully merged 4 separate game projects, unifying codebases</li>
+                        <li>Built reusable UI components adopted across 10+ projects</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Hypercasual</span>
+                        <span class="tag">Rapid Prototyping</span>
+                        <span class="tag">Push Notifications</span>
+                    </div>
+                </div>
+                <div class="t-role">
+                    <div class="t-role-title">Junior Unity Developer</div>
+                    <div class="t-role-period">Dec 2017 — Jun 2018</div>
+                    <ul class="t-achievements">
+                        <li>Founding team member — contributed to studio's first game projects</li>
+                        <li>Established coding standards and Git workflows</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Unity</span>
+                        <span class="tag">MVC</span>
+                        <span class="tag">Observer Pattern</span>
+                        <span class="tag">Object Pooling</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TSD -->
+        <div class="t-company reveal">
+            <div class="t-company-header" onclick="toggleRoles(this)">
+                <div class="t-dot"></div>
+                <div class="t-co-info">
+                    <div class="t-co-name">Technology & Science Dynamics</div>
+                    <div class="t-co-period">Jul 2016 — Dec 2017 · 1.5 years</div>
+                </div>
+                <div class="t-co-toggle">▾</div>
+            </div>
+            <div class="t-roles">
+                <div class="t-role">
+                    <div class="t-role-title">Middle Unity Developer → Team Lead</div>
+                    <div class="t-role-period">Jun 2017 — Dec 2017</div>
+                    <ul class="t-achievements">
+                        <li>Promoted to Team Lead managing 3 developers</li>
+                        <li>Shipped 3 games meeting all delivery deadlines</li>
+                        <li>Introduced code review practices — <span class="metric">-25% bug count</span></li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Team Leadership</span>
+                    </div>
+                </div>
+                <div class="t-role">
+                    <div class="t-role-title">Intern → Junior Unity Developer</div>
+                    <div class="t-role-period">Jul 2016 — May 2017</div>
+                    <ul class="t-achievements">
+                        <li>Rapid advancement from intern to junior — built first playable prototypes</li>
+                        <li>Performance profiling and optimization for mobile targets</li>
+                    </ul>
+                    <div class="t-tech">
+                        <span class="tag">Unity</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Mobile Optimization</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+    <div class="s-header reveal">
+        <span class="s-num">03</span>
+        <h2 class="s-title">Skills & Tech</h2>
+        <div class="s-line"></div>
+    </div>
+    <div class="skills-grid">
+        <div class="skill-card reveal">
+            <div class="sk-icon">🎮</div>
+            <div class="sk-title">Game Development</div>
+            <div class="sk-items">
+                <span class="sk-pill">Unity</span>
+                <span class="sk-pill">C#</span>
+                <span class="sk-pill">ScriptableObjects</span>
+                <span class="sk-pill">State Machines</span>
+                <span class="sk-pill">DI Patterns</span>
+                <span class="sk-pill">Shaders</span>
+                <span class="sk-pill">Particle Systems</span>
+                <span class="sk-pill">Object Pooling</span>
+                <span class="sk-pill">WebGL</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <div class="sk-icon">📱</div>
+            <div class="sk-title">Mobile Platforms</div>
+            <div class="sk-items">
+                <span class="sk-pill">Android</span>
+                <span class="sk-pill">iOS</span>
+                <span class="sk-pill">Google Play</span>
+                <span class="sk-pill">App Store</span>
+                <span class="sk-pill">Deep Linking</span>
+                <span class="sk-pill">Push Notifications</span>
+                <span class="sk-pill">ASO</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <div class="sk-icon warm">🔥</div>
+            <div class="sk-title">Firebase & Analytics</div>
+            <div class="sk-items">
+                <span class="sk-pill">Firebase Analytics</span>
+                <span class="sk-pill">Remote Config</span>
+                <span class="sk-pill">Crashlytics</span>
+                <span class="sk-pill">FCM</span>
+                <span class="sk-pill">Auth</span>
+                <span class="sk-pill">Realtime DB</span>
+                <span class="sk-pill">A/B Testing</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <div class="sk-icon warm">💰</div>
+            <div class="sk-title">Monetization</div>
+            <div class="sk-items">
+                <span class="sk-pill">AppLovin MAX</span>
+                <span class="sk-pill">Ad Mediation</span>
+                <span class="sk-pill">IAP</span>
+                <span class="sk-pill">Revenue Optimization</span>
+                <span class="sk-pill">ARPDAU</span>
+                <span class="sk-pill">LiveOps</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <div class="sk-icon">⚙️</div>
+            <div class="sk-title">DevOps & Backend</div>
+            <div class="sk-items">
+                <span class="sk-pill">GitHub Actions</span>
+                <span class="sk-pill">CI/CD</span>
+                <span class="sk-pill">Python</span>
+                <span class="sk-pill">Node.js</span>
+                <span class="sk-pill">AWS/GCP</span>
+                <span class="sk-pill">REST APIs</span>
+                <span class="sk-pill">Git</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <div class="sk-icon">👥</div>
+            <div class="sk-title">Leadership</div>
+            <div class="sk-items">
+                <span class="sk-pill">Team Building</span>
+                <span class="sk-pill">Agile/Scrum</span>
+                <span class="sk-pill">Code Review</span>
+                <span class="sk-pill">Architecture</span>
+                <span class="sk-pill">Mentoring</span>
+                <span class="sk-pill">Hiring</span>
+                <span class="sk-pill">Jira</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+    <div class="s-header reveal">
+        <span class="s-num">04</span>
+        <h2 class="s-title">Key Projects</h2>
+        <div class="s-line"></div>
+    </div>
+    <div class="projects-grid">
+        <div class="proj-card reveal">
+            <div class="proj-top">
+                <span class="proj-type">▸ Flagship Title</span>
+                <span class="proj-badge">LIVE</span>
+            </div>
+            <div class="proj-body">
+                <h3 class="proj-name">Playoff</h3>
+                <p class="proj-desc">
+                    Real-money skill-based gaming platform on iOS and Android. Millions of active players, 
+                    120+ analytics events, 50+ A/B tests, cross-app deep linking, and full ad mediation stack.
+                </p>
+                <div class="t-tech">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">AppLovin</span>
+                    <span class="tag">Deep Links</span>
+                    <span class="tag">Remote Config</span>
+                </div>
+            </div>
+        </div>
+        <div class="proj-card reveal">
+            <div class="proj-top">
+                <span class="proj-type">▸ New Release</span>
+                <span class="proj-badge">SHIPPED</span>
+            </div>
+            <div class="proj-body">
+                <h3 class="proj-name">Knife Playoff</h3>
+                <p class="proj-desc">
+                    Single-player knife game with 20 levels, interstitial ads, deep link integration 
+                    with the main Playoff app, Firebase Analytics, and server-side revenue tracking.
+                </p>
+                <div class="t-tech">
+                    <span class="tag">Unity</span>
+                    <span class="tag">C#</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">Ads SDK</span>
+                </div>
+            </div>
+        </div>
+        <div class="proj-card reveal">
+            <div class="proj-top">
+                <span class="proj-type">▸ Narrative Game</span>
+                <span class="proj-badge">IN DEV</span>
+            </div>
+            <div class="proj-body">
+                <h3 class="proj-name">Mystery Inn</h3>
+                <p class="proj-desc">
+                    Narrative-driven game with complex dialogue systems. Custom Python automation 
+                    pipeline converting narrative CSV files into Chat Data format for the game engine.
+                </p>
+                <div class="t-tech">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Automation</span>
+                    <span class="tag">Narrative Design</span>
+                </div>
+            </div>
+        </div>
+        <div class="proj-card reveal">
+            <div class="proj-top">
+                <span class="proj-type">▸ Match-3</span>
+                <span class="proj-badge">1M+ DL</span>
+            </div>
+            <div class="proj-body">
+                <h3 class="proj-name">Match-3 Title (Next Epic)</h3>
+                <p class="proj-desc">
+                    Led end-to-end development from concept to launch. 1M+ downloads, 4.5★ rating, 
+                    optimized for 60 FPS on low-end devices. 60% draw call reduction through sprite atlasing.
+                </p>
+                <div class="t-tech">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Profiler</span>
+                    <span class="tag">VFX</span>
+                    <span class="tag">Dynamic Resolution</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+    <h2 class="contact-title reveal">Let's build<br>something <span class="grad">ambitious</span></h2>
+    <p class="contact-sub reveal">
+        Open to discussing game development, technical leadership, 
+        or collaboration opportunities in mobile gaming.
+    </p>
+    <div class="contact-grid reveal">
+        <a href="mailto:vahe.babasyan.1994@gmail.com" class="c-btn main">✉ vahe.babasyan.1994@gmail.com</a>
+        <a href="tel:+37455188404" class="c-btn">☎ +374 55 188 404</a>
+        <a href="https://www.linkedin.com/in/vahe-babasyan-442445127/" class="c-btn" target="_blank">↗ LinkedIn</a>
+        <a href="https://github.com/Vah94/" class="c-btn" target="_blank">↗ GitHub</a>
+        <a href="https://nextepic.games/" class="c-btn" target="_blank">↗ Portfolio</a>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Vahe Babasyan — Built with Unity spirit and clean code</p>
+    <span class="award">🏆 RA State Educational Award — 1st Place, Best Bachelor in IT</span>
+</footer>
+
+</div>
+
+<script>
+    // ─── Particles ───
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: 0, y: 0 };
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    document.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+
+    class Particle {
+        constructor() { this.reset(); }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 1.5 + 0.5;
+            this.speedX = (Math.random() - 0.5) * 0.3;
+            this.speedY = (Math.random() - 0.5) * 0.3;
+            this.opacity = Math.random() * 0.3 + 0.05;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+                this.x -= dx * 0.003;
+                this.y -= dy * 0.003;
+                this.opacity = Math.min(this.opacity + 0.01, 0.5);
+            }
+            if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(59, 240, 228, ${this.opacity})`;
+            ctx.fill();
+        }
+    }
+
+    for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+    function connectParticles() {
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a + 1; b < particles.length; b++) {
+                const dx = particles[a].x - particles[b].x;
+                const dy = particles[a].y - particles[b].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(59, 240, 228, ${0.04 * (1 - dist / 120)})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => { p.update(); p.draw(); });
+        connectParticles();
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ─── Nav toggle ───
+    document.getElementById('navToggle').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(a =>
+        a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+    );
+
+    // ─── Timeline toggle ───
+    function toggleRoles(header) {
+        const roles = header.nextElementSibling;
+        const wasOpen = roles.classList.contains('open');
+        // close all
+        document.querySelectorAll('.t-roles').forEach(r => r.classList.remove('open'));
+        document.querySelectorAll('.t-company-header').forEach(h => h.classList.remove('active'));
+        if (!wasOpen) {
+            roles.classList.add('open');
+            header.classList.add('active');
+        }
+    }
+
+    // ─── Scroll reveal ───
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
