@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vahe Babasyan — CTO & Unity Team Lead</title>
+    <title>Vahe Babasyan — Unity Tech Lead / Head of Development</title>
+    <meta name="description" content="Unity Tech Lead and Head of Development with 10 years in mobile games. Unity, C#, CI/CD, AI-assisted development.">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Vahe Babasyan — Unity Tech Lead / Head of Development">
+    <meta property="og:description" content="10 years in mobile games, 40+ shipped titles. Unity architecture, mobile platform, CI/CD and AI-assisted development.">
+    <meta property="og:url" content="https://vah94.github.io/vahe-cv/">
+    <meta name="twitter:card" content="summary">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@300;400;600;800&family=Geist+Mono:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
@@ -576,6 +582,139 @@
             border: 1px solid rgba(59, 240, 228, 0.1);
         }
 
+        .t-role-intro {
+            font-size: 0.9rem;
+            color: var(--text);
+            margin-bottom: 0.9rem;
+            max-width: 820px;
+        }
+
+        /* ─── CAREER PATH ─── */
+        .career-path {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 2.5rem;
+        }
+        .cp-step {
+            background: var(--bg-panel);
+            padding: 1rem 0.9rem;
+            position: relative;
+        }
+        .cp-step::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 2px;
+            background: var(--accent);
+            opacity: calc(var(--lvl) / 6);
+        }
+        .cp-year {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent2);
+        }
+        .cp-role {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: 0.3rem;
+        }
+        .cp-co {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+        }
+        .cp-step.now { background: var(--bg-card); }
+        .cp-step.now .cp-role { color: var(--accent); }
+
+        /* ─── APPROACH ─── */
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        .ap-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.6rem;
+            transition: all 0.4s ease;
+        }
+        .ap-card:hover {
+            border-color: var(--border-active);
+            transform: translateY(-3px);
+        }
+        .ap-num {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+        }
+        .ap-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0.4rem 0 0.7rem;
+        }
+        .ap-text {
+            font-size: 0.86rem;
+            color: var(--text-dim);
+            line-height: 1.65;
+        }
+
+        .pipeline-label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .pipeline-label strong { color: var(--accent2); font-weight: 500; }
+        .pipeline {
+            display: flex;
+            align-items: stretch;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        .pl-step {
+            flex: 1;
+            min-width: 140px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            position: relative;
+        }
+        .pl-step.ai { border-color: rgba(240, 160, 59, 0.35); }
+        .pl-step.gate { border-color: rgba(59, 240, 122, 0.35); }
+        .pl-icon { font-size: 1.1rem; }
+        .pl-name {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.4rem 0 0.2rem;
+        }
+        .pl-who {
+            font-family: var(--font-mono);
+            font-size: 0.64rem;
+            color: var(--text-muted);
+        }
+        .pl-step.ai .pl-who { color: var(--accent2); }
+        .pl-step.gate .pl-who { color: var(--success); }
+        .pl-arrow {
+            align-self: center;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+
         /* ─── SKILLS ─── */
         .skills-grid {
             display: grid;
@@ -652,7 +791,7 @@
         /* ─── PROJECTS ─── */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
         }
 
@@ -706,6 +845,27 @@
             color: var(--text-dim);
             margin-bottom: 1.2rem;
             line-height: 1.7;
+        }
+
+        .proj-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+        }
+        .store-link {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        .store-link:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-dim);
         }
 
         /* ─── CONTACT ─── */
@@ -813,6 +973,20 @@
         @media (max-width: 900px) {
             .skills-grid { grid-template-columns: repeat(2, 1fr); }
             .about-grid { grid-template-columns: 1fr; }
+            .approach-grid { grid-template-columns: repeat(2, 1fr); }
+            .career-path { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal, .hero-badge, .hero h1, .hero-body, .hero-stats, .hero-cta { opacity: 1; transform: none; }
+            #particles-canvas { display: none; }
+            html { scroll-behavior: auto; }
+        }
+        @media print {
+            nav, #particles-canvas, .hero-cta, .contact-grid { display: none; }
+            body::after { display: none; }
+            .t-roles { display: block !important; }
+            .reveal { opacity: 1; transform: none; }
         }
         @media (max-width: 768px) {
             nav { padding: 0.8rem 1.2rem; }
@@ -838,6 +1012,17 @@
             .projects-grid { grid-template-columns: 1fr; }
             .contact-section { padding: 4rem 1.5rem 3rem; }
             .timeline { padding-left: 1.5rem; }
+            .approach-grid { grid-template-columns: 1fr; }
+            .about-grid, .skills-grid, .projects-grid { grid-template-columns: minmax(0, 1fr); }
+            .info-row { gap: 1rem; }
+            .info-val { text-align: right; }
+            .c-btn { max-width: 100%; word-break: break-all; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero-badge { max-width: 100%; }
+            .career-path { grid-template-columns: repeat(2, 1fr); }
+            .pipeline { flex-direction: column; }
+            .pl-arrow { transform: rotate(90deg); }
+            .hero-cta { flex-wrap: wrap; }
         }
     </style>
 </head>
@@ -858,6 +1043,7 @@
     </button>
     <ul class="nav-links" id="navLinks">
         <li><a href="#about">About</a></li>
+        <li><a href="#approach">Approach</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#projects">Projects</a></li>
@@ -868,20 +1054,20 @@
 
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-badge">CTO & Unity Team Lead — Gora Games</div>
+    <div class="hero-badge">Unity Tech Lead / Head of Development — Gora Games</div>
     <h1>
         <span class="line-accent">Vahe Babasyan</span><br>
-        <span class="line-dim">Shipping games that</span><br>
-        millions play
+        <span class="line-dim">Unity codebases</span><br>
+        built to last
     </h1>
     <p class="hero-body">
-        CTO and Unity Team Lead with 8+ years building mobile games. 
-        Currently leading development on Playoff — a real-money skill-based 
-        gaming platform on iOS and Android.
+        Unity Tech Lead and Head of Development with 10 years in mobile games.
+        I lead the development team at Gora Games — a real-money skill-gaming platform
+        and casual titles on Android and iOS — and stay hands-on in the client code.
     </p>
     <div class="hero-stats">
         <div class="stat">
-            <div class="stat-value">8+</div>
+            <div class="stat-value">10</div>
             <div class="stat-label">Years</div>
         </div>
         <div class="stat">
@@ -892,13 +1078,10 @@
             <div class="stat-value">4M+</div>
             <div class="stat-label">Downloads</div>
         </div>
-        <div class="stat">
-            <div class="stat-value">50+</div>
-            <div class="stat-label">A/B Tests</div>
-        </div>
     </div>
     <div class="hero-cta">
         <a href="mailto:vahe.babasyan.1994@gmail.com" class="btn btn-primary">✉ Get in Touch</a>
+        <a href="Vahe-Babasyan-CV.pdf" class="btn" download>↓ Download CV</a>
         <a href="https://github.com/Vah94/" class="btn" target="_blank">↗ GitHub</a>
         <a href="https://www.linkedin.com/in/vahe-babasyan-442445127/" class="btn" target="_blank">↗ LinkedIn</a>
     </div>
@@ -914,19 +1097,28 @@
     <div class="about-grid">
         <div class="about-text reveal">
             <p>
-                I'm a <strong>CTO and Unity Team Lead</strong> at <span class="highlight">Gora Games</span>,
-                where I lead client-side development for a real-money skill-based gaming platform 
-                serving millions of active players on iOS and Android.
+                I'm <strong>Unity Tech Lead and Head of Development</strong> at <span class="highlight">Gora Games</span>,
+                leading the team behind a real-money skill-gaming platform and casual titles on Android and iOS.
             </p>
             <p>
-                Previously scaled game studios from concept to live operations, shipping 
-                <strong>40+ mobile titles</strong> across casual, merge, match-3, and hypercasual genres.
-                I've grown teams from 2 to 8+ engineers and built everything from 
-                monetization frameworks to CI/CD pipelines.
+                <strong>Architecture.</strong> I design Unity codebases meant to last: clear layer boundaries,
+                dependency injection, MVVM with reactive data flow, Addressables for content, configuration
+                that degrades safely when the network does not cooperate — so several products and a growing
+                team can share one codebase without blocking each other.
             </p>
             <p>
-                I thrive at the intersection of <strong>clean code, engaging gameplay, and business impact</strong> — 
-                making hard technical calls while shipping games that players love and that generate revenue.
+                <strong>Mobile platform.</strong> Build size, startup time and memory on real devices, including
+                low-end Android. The SDK layer every mobile game carries: ad mediation, attribution, analytics,
+                consent, push, anti-fraud signals. Store publishing on both platforms.
+            </p>
+            <p>
+                <strong>Team and delivery.</strong> CI/CD with tests as a release gate, a planning-first process where
+                every task has a written plan before implementation, and since 2026
+                <span class="highlight">AI agents (Claude Code, Codex)</span> as part of everyday work.
+            </p>
+            <p>
+                Before Gora Games — <strong>6 years at Next Epic</strong>, from junior developer to CTO,
+                <strong>40+ shipped</strong> casual, merge, match-3 and hypercasual titles.
             </p>
         </div>
         <div class="about-panel reveal">
@@ -941,7 +1133,7 @@
                 </div>
                 <div class="info-row">
                     <span class="info-key">role</span>
-                    <span class="info-val">Sr. Unity Dev, Team Lead</span>
+                    <span class="info-val">Unity Tech Lead / Head of Dev</span>
                 </div>
                 <div class="info-row">
                     <span class="info-key">company</span>
@@ -959,6 +1151,7 @@
                     <div class="cert-label">Certifications & Awards</div>
                     <div class="cert-item">Foundations of Project Management</div>
                     <div class="cert-item">Agile Project Management</div>
+                    <div class="cert-item">Certificate of Achievement — IC Design Specialist (Bachelor's program)</div>
                     <div class="cert-item">RA State Educational Award — 1st Place</div>
                     <div class="cert-item">Best Bachelor in IT Field</div>
                 </div>
@@ -967,12 +1160,89 @@
     </div>
 </section>
 
+<!-- APPROACH -->
+<section id="approach">
+    <div class="s-header reveal">
+        <span class="s-num">02</span>
+        <h2 class="s-title">How I Work</h2>
+        <div class="s-line"></div>
+    </div>
+    <div class="approach-grid">
+        <div class="ap-card reveal">
+            <div class="ap-num">01 / ARCHITECTURE</div>
+            <div class="ap-title">Codebases built to last</div>
+            <p class="ap-text">Clear layer boundaries, DI, MVVM with reactive data flow, Addressables for content. Several products and a growing team share one codebase without blocking each other.</p>
+        </div>
+        <div class="ap-card reveal">
+            <div class="ap-num">02 / PLATFORM</div>
+            <div class="ap-title">Real devices, real budgets</div>
+            <p class="ap-text">Build size, startup time and memory measured on low-end Android. Configuration that degrades safely when the network does not cooperate.</p>
+        </div>
+        <div class="ap-card reveal">
+            <div class="ap-num">03 / DELIVERY</div>
+            <div class="ap-title">Plan first, tests gate</div>
+            <p class="ap-text">Every task has a written plan before implementation. CI/CD on self-hosted runners; tests decide whether a build goes to the store.</p>
+        </div>
+        <div class="ap-card reveal">
+            <div class="ap-num">04 / AI</div>
+            <div class="ap-title">Agents in daily work</div>
+            <p class="ap-text">Since 2026 Claude Code and Codex implement from the plan and review pull requests; internal MCP tooling connects Jira, Figma and the Unity Editor.</p>
+        </div>
+    </div>
+    <div class="pipeline-label reveal">// how a task travels to the store — <strong>AI-assisted</strong> steps highlighted</div>
+    <div class="pipeline reveal">
+        <div class="pl-step">
+            <div class="pl-icon">🎫</div>
+            <div class="pl-name">Ticket</div>
+            <div class="pl-who">Jira · Figma</div>
+        </div>
+        <div class="pl-arrow">→</div>
+        <div class="pl-step">
+            <div class="pl-icon">📝</div>
+            <div class="pl-name">Written plan</div>
+            <div class="pl-who">reviewed by a human</div>
+        </div>
+        <div class="pl-arrow">→</div>
+        <div class="pl-step ai">
+            <div class="pl-icon">🤖</div>
+            <div class="pl-name">Implementation</div>
+            <div class="pl-who">Claude Code + engineer</div>
+        </div>
+        <div class="pl-arrow">→</div>
+        <div class="pl-step ai">
+            <div class="pl-icon">🔍</div>
+            <div class="pl-name">PR review</div>
+            <div class="pl-who">Codex + team lead</div>
+        </div>
+        <div class="pl-arrow">→</div>
+        <div class="pl-step gate">
+            <div class="pl-icon">✅</div>
+            <div class="pl-name">Tests gate</div>
+            <div class="pl-who">GitHub Actions</div>
+        </div>
+        <div class="pl-arrow">→</div>
+        <div class="pl-step">
+            <div class="pl-icon">🚀</div>
+            <div class="pl-name">Release</div>
+            <div class="pl-who">Google Play · TestFlight</div>
+        </div>
+    </div>
+</section>
+
 <!-- EXPERIENCE -->
 <section id="experience">
     <div class="s-header reveal">
-        <span class="s-num">02</span>
+        <span class="s-num">03</span>
         <h2 class="s-title">Experience</h2>
         <div class="s-line"></div>
+    </div>
+    <div class="career-path reveal">
+        <div class="cp-step" style="--lvl:1"><div class="cp-year">2016</div><div class="cp-role">Intern → Junior</div><div class="cp-co">TSD</div></div>
+        <div class="cp-step" style="--lvl:2"><div class="cp-year">2017</div><div class="cp-role">Team Lead</div><div class="cp-co">TSD</div></div>
+        <div class="cp-step" style="--lvl:2"><div class="cp-year">2018</div><div class="cp-role">Middle Developer</div><div class="cp-co">Next Epic</div></div>
+        <div class="cp-step" style="--lvl:3"><div class="cp-year">2020</div><div class="cp-role">Senior, Team Lead</div><div class="cp-co">Next Epic</div></div>
+        <div class="cp-step" style="--lvl:5"><div class="cp-year">2021</div><div class="cp-role">CTO</div><div class="cp-co">Next Epic</div></div>
+        <div class="cp-step now" style="--lvl:6"><div class="cp-year">2024 — now</div><div class="cp-role">Tech Lead / Head of Dev</div><div class="cp-co">Gora Games</div></div>
     </div>
     <div class="timeline">
 
@@ -988,58 +1258,34 @@
             </div>
             <div class="t-roles open">
                 <div class="t-role">
-                    <div class="t-role-title">Senior Unity Developer, Team Lead</div>
+                    <div class="t-role-title">Unity Tech Lead / Head of Development</div>
                     <div class="t-role-period">Aug 2024 — Present</div>
+                    <p class="t-role-intro">Real-money skill-gaming platform and casual titles on Android and iOS. Lead a cross-functional team (Unity, backend, QA); own the client architecture and the release pipeline.</p>
                     <ul class="t-achievements">
-                        <li>Leading Unity development for a real-money skill-based gaming platform serving millions of active players</li>
-                        <li>Architected cross-app promotion system using deep linking — <span class="metric">+25% cross-app user acquisition</span></li>
-                        <li>Built A/B testing framework with Unity Remote Config — <span class="metric">50+ experiments</span> with data-driven feature rollouts</li>
-                        <li>Designed promotional game mechanics with server-side tracking — <span class="metric">+18% first-session conversion</span></li>
-                        <li>Created CI/CD pipeline with GitHub Actions — <span class="metric">deployment time 1hr → 20min</span></li>
-                        <li>Integrated ad mediation + Firebase Analytics with <span class="metric">120+ custom events</span></li>
-                        <li>Established Jira-GitHub integration — <span class="metric">+30% sprint velocity</span></li>
-                        <li>Lead team of 3 developers with agile sprints, code reviews, and mentorship</li>
+                        <li>Designed the client architecture: layered codebase with explicit boundaries between framework, feature systems and app modes; DI, MVVM, reactive data flow; <span class="metric">Addressables</span> as the content pipeline; remote configuration with safe local fallbacks</li>
+                        <li>Built the <span class="metric">multi-product build system</span> — several titles ship from one codebase with their own identity, SDK set and content</li>
+                        <li>Own mobile platform quality: build size, startup time and memory on real devices, including low-end Android; profiling and budgets as part of the release process</li>
+                        <li>Own the SDK layer: ad mediation (AppLovin MAX), attribution and analytics (AppsFlyer, Tenjin, Firebase), consent, push, anti-fraud signals</li>
+                        <li>Set up CI/CD on self-hosted runners with <span class="metric">tests as a release gate</span> and automatic publishing to Google Play, TestFlight and Firebase App Distribution</li>
+                        <li>Run a <span class="metric">planning-first process</span>: every task has a written plan before implementation. Since 2026 Claude Code and Codex are part of daily work — automated PR review and internal tooling connecting Jira, Figma and the Unity Editor</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Unity</span>
                         <span class="tag">C#</span>
-                        <span class="tag">Firebase</span>
+                        <span class="tag">VContainer</span>
+                        <span class="tag">UniRx</span>
+                        <span class="tag">UniTask</span>
+                        <span class="tag">Addressables</span>
+                        <span class="tag">IL2CPP</span>
                         <span class="tag">AppLovin MAX</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">AppsFlyer</span>
+                        <span class="tag">Tenjin</span>
+                        <span class="tag">Flagsmith</span>
                         <span class="tag">GitHub Actions</span>
-                        <span class="tag">Deep Linking</span>
-                        <span class="tag">Jira</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stealth Startup -->
-        <div class="t-company reveal">
-            <div class="t-company-header" onclick="toggleRoles(this)">
-                <div class="t-dot"></div>
-                <div class="t-co-info">
-                    <div class="t-co-name">Stealth Startup</div>
-                    <div class="t-co-period">Sep 2022 — Aug 2024 · 2 years</div>
-                </div>
-                <div class="t-co-toggle">▾</div>
-            </div>
-            <div class="t-roles">
-                <div class="t-role">
-                    <div class="t-role-title">CTO</div>
-                    <div class="t-role-period">Sep 2022 — Aug 2024</div>
-                    <ul class="t-achievements">
-                        <li>Led technical strategy and built the engineering org from scratch for an AI-powered sports analytics platform</li>
-                        <li>Architected real-time data processing pipeline for live sports tracking — <span class="metric">sub-second latency</span></li>
-                        <li>Designed AI-driven analytics algorithms for player performance prediction</li>
-                        <li>Built scalable cloud infrastructure — <span class="metric">10K+ concurrent users, 99.9% uptime</span></li>
-                        <li>Established engineering best practices: code reviews, CI/CD, automated testing, documentation</li>
-                    </ul>
-                    <div class="t-tech">
-                        <span class="tag">Python</span>
-                        <span class="tag">Node.js</span>
-                        <span class="tag">AWS/GCP</span>
-                        <span class="tag">ML/AI</span>
-                        <span class="tag">Real-time Processing</span>
+                        <span class="tag">Claude Code</span>
+                        <span class="tag">Codex</span>
+                        <span class="tag">MCP</span>
                     </div>
                 </div>
             </div>
@@ -1057,16 +1303,15 @@
             </div>
             <div class="t-roles">
                 <div class="t-role">
-                    <div class="t-role-title">Senior Unity Developer → Team Lead → CTO</div>
+                    <div class="t-role-title">Senior Unity Developer, Team Lead, CTO</div>
                     <div class="t-role-period">Mar 2021 — Dec 2023</div>
+                    <p class="t-role-intro">Mobile studio, casual and merge games on Android and iOS (Mystery Inn: Merge Adventure, formerly Hotel Project, and other titles). Promoted from Team Lead to CTO; responsible for architecture, LiveOps infrastructure and the engineering team.</p>
                     <ul class="t-achievements">
-                        <li>Promoted from Team Lead to CTO, driving technical strategy and scaling game operations</li>
-                        <li>Increased 30-day retention by <span class="metric">+22%</span> through data-driven LiveOps</li>
-                        <li>Built monetization framework (IAP + ad mediation) — <span class="metric">+35% ARPDAU</span></li>
-                        <li>Achieved <span class="metric">+40% improvement in user acquisition</span> through optimized UA campaigns and ASO</li>
-                        <li>Designed modular game architecture with ScriptableObjects — <span class="metric">50% faster feature dev</span></li>
-                        <li>Integrated full Firebase stack: Analytics (200+ events), Remote Config (100+ A/B tests), FCM (18% push engagement)</li>
-                        <li>Led integration of 15+ third-party SDKs</li>
+                        <li>Designed the <span class="metric">shared game architecture</span> used across the studio's titles: data-driven content on ScriptableObjects, state machines for game flow, DI for testability</li>
+                        <li>Built the <span class="metric">LiveOps foundation</span>: Firebase Analytics, Remote Config and A/B testing, Cloud Messaging, Auth and Realtime Database; weekly events and seasonal content on top of it</li>
+                        <li>Owned monetisation integration: IAP and ad mediation, with the analytics to evaluate both</li>
+                        <li>Integrated and maintained the third-party SDK layer (ad networks, analytics, attribution)</li>
+                        <li>Grew and mentored the development team; introduced career tracks and regular reviews</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Unity</span>
@@ -1080,11 +1325,12 @@
                 <div class="t-role">
                     <div class="t-role-title">Senior Unity Developer, Team Lead</div>
                     <div class="t-role-period">Mar 2020 — Feb 2021</div>
+                    <p class="t-role-intro">Led a match-3 title from concept to launch with a small cross-functional team. Also shipped Merge Gnomes Vs Monster in the same period.</p>
                     <ul class="t-achievements">
-                        <li>Shipped match-3 game — <span class="metric">1M+ downloads, 4.5★ rating</span></li>
-                        <li>Managed team of 3 developers, delivering 12 releases on schedule</li>
-                        <li>Optimized VFX for stable <span class="metric">60 FPS on 2GB RAM devices</span></li>
-                        <li>Reduced draw calls by <span class="metric">60%</span> through sprite atlasing and dynamic batching</li>
+                        <li>Match-3 title reached <span class="metric">1M+ downloads, 4.5★ rating</span></li>
+                        <li>Owned the technical side end to end: architecture, release planning, monthly release cadence</li>
+                        <li>Performance on low-end devices: Unity Profiler, particle and VFX budgets, dynamic resolution, sprite atlasing and batching — stable <span class="metric">60 FPS on 2 GB RAM phones</span></li>
+                        <li>Set performance budgets for assets together with the art team</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Unity Profiler</span>
@@ -1097,9 +1343,9 @@
                     <div class="t-role-title">Middle Unity Developer</div>
                     <div class="t-role-period">Jul 2018 — Feb 2020</div>
                     <ul class="t-achievements">
-                        <li>Shipped <span class="metric">15+ hypercasual games</span> with combined 3M+ downloads</li>
-                        <li>Successfully merged 4 separate game projects, unifying codebases</li>
-                        <li>Built reusable UI components adopted across 10+ projects</li>
+                        <li>Shipped <span class="metric">15+ hypercasual and idle titles</span> with <span class="metric">3M+ combined downloads</span> in two-week prototyping cycles: Hair Cut Idle, Food Truck Idle, Joy Center Tycoon, Famous Factory Tycoon, Cats Tower</li>
+                        <li>Merged four separate game projects into one codebase while keeping each game's mechanics intact</li>
+                        <li>Built reusable UI and in-game messaging components adopted across the studio's projects; added push notifications</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Hypercasual</span>
@@ -1111,14 +1357,13 @@
                     <div class="t-role-title">Junior Unity Developer</div>
                     <div class="t-role-period">Dec 2017 — Jun 2018</div>
                     <ul class="t-achievements">
-                        <li>Founding team member — contributed to studio's first game projects</li>
-                        <li>Established coding standards and Git workflows</li>
+                        <li>Founding team member — gameplay features, UI and core loops on the studio's first titles (Leo's Journey)</li>
+                        <li>Helped set up coding standards and the Git workflow</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Unity</span>
-                        <span class="tag">MVC</span>
-                        <span class="tag">Observer Pattern</span>
-                        <span class="tag">Object Pooling</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Git</span>
                     </div>
                 </div>
             </div>
@@ -1136,12 +1381,13 @@
             </div>
             <div class="t-roles">
                 <div class="t-role">
-                    <div class="t-role-title">Middle Unity Developer → Team Lead</div>
+                    <div class="t-role-title">Middle Unity Developer, Team Lead</div>
                     <div class="t-role-period">Jun 2017 — Dec 2017</div>
+                    <p class="t-role-intro">Games division of a technology company whose main business was hardware.</p>
                     <ul class="t-achievements">
-                        <li>Promoted to Team Lead managing 3 developers</li>
-                        <li>Shipped 3 games meeting all delivery deadlines</li>
-                        <li>Introduced code review practices — <span class="metric">-25% bug count</span></li>
+                        <li>Led the Unity team of three developers; <span class="metric">three games shipped on schedule</span> (Carrot Thief among them)</li>
+                        <li>Turned design concepts into technical specifications</li>
+                        <li>Introduced code review, mentored junior developers</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Unity</span>
@@ -1153,8 +1399,9 @@
                     <div class="t-role-title">Intern → Junior Unity Developer</div>
                     <div class="t-role-period">Jul 2016 — May 2017</div>
                     <ul class="t-achievements">
-                        <li>Rapid advancement from intern to junior — built first playable prototypes</li>
-                        <li>Performance profiling and optimization for mobile targets</li>
+                        <li>Started as an intern and moved to junior developer within the first months</li>
+                        <li>Gameplay features, UI and performance profiling for mobile targets on Viking Sail and Color Pop</li>
+                        <li>Shared code modules picked up by later projects</li>
                     </ul>
                     <div class="t-tech">
                         <span class="tag">Unity</span>
@@ -1171,88 +1418,94 @@
 <!-- SKILLS -->
 <section id="skills">
     <div class="s-header reveal">
-        <span class="s-num">03</span>
+        <span class="s-num">04</span>
         <h2 class="s-title">Skills & Tech</h2>
         <div class="s-line"></div>
     </div>
     <div class="skills-grid">
         <div class="skill-card reveal">
             <div class="sk-icon">🎮</div>
-            <div class="sk-title">Game Development</div>
+            <div class="sk-title">Unity & Architecture</div>
             <div class="sk-items">
                 <span class="sk-pill">Unity</span>
                 <span class="sk-pill">C#</span>
+                <span class="sk-pill">VContainer</span>
+                <span class="sk-pill">MVVM</span>
+                <span class="sk-pill">UniRx</span>
+                <span class="sk-pill">UniTask</span>
+                <span class="sk-pill">Addressables</span>
+                <span class="sk-pill">IL2CPP</span>
                 <span class="sk-pill">ScriptableObjects</span>
                 <span class="sk-pill">State Machines</span>
-                <span class="sk-pill">DI Patterns</span>
-                <span class="sk-pill">Shaders</span>
-                <span class="sk-pill">Particle Systems</span>
-                <span class="sk-pill">Object Pooling</span>
-                <span class="sk-pill">WebGL</span>
             </div>
         </div>
         <div class="skill-card reveal">
             <div class="sk-icon">📱</div>
-            <div class="sk-title">Mobile Platforms</div>
+            <div class="sk-title">Mobile Platform</div>
             <div class="sk-items">
                 <span class="sk-pill">Android</span>
                 <span class="sk-pill">iOS</span>
+                <span class="sk-pill">Build Size</span>
+                <span class="sk-pill">Startup Time</span>
+                <span class="sk-pill">Memory</span>
+                <span class="sk-pill">Low-end Devices</span>
+                <span class="sk-pill">Unity Profiler</span>
                 <span class="sk-pill">Google Play</span>
                 <span class="sk-pill">App Store</span>
-                <span class="sk-pill">Deep Linking</span>
-                <span class="sk-pill">Push Notifications</span>
-                <span class="sk-pill">ASO</span>
             </div>
         </div>
         <div class="skill-card reveal">
-            <div class="sk-icon warm">🔥</div>
-            <div class="sk-title">Firebase & Analytics</div>
-            <div class="sk-items">
-                <span class="sk-pill">Firebase Analytics</span>
-                <span class="sk-pill">Remote Config</span>
-                <span class="sk-pill">Crashlytics</span>
-                <span class="sk-pill">FCM</span>
-                <span class="sk-pill">Auth</span>
-                <span class="sk-pill">Realtime DB</span>
-                <span class="sk-pill">A/B Testing</span>
-            </div>
-        </div>
-        <div class="skill-card reveal">
-            <div class="sk-icon warm">💰</div>
-            <div class="sk-title">Monetization</div>
+            <div class="sk-icon warm">🔌</div>
+            <div class="sk-title">SDK Layer & LiveOps</div>
             <div class="sk-items">
                 <span class="sk-pill">AppLovin MAX</span>
-                <span class="sk-pill">Ad Mediation</span>
                 <span class="sk-pill">IAP</span>
-                <span class="sk-pill">Revenue Optimization</span>
-                <span class="sk-pill">ARPDAU</span>
-                <span class="sk-pill">LiveOps</span>
+                <span class="sk-pill">Firebase</span>
+                <span class="sk-pill">AppsFlyer</span>
+                <span class="sk-pill">Tenjin</span>
+                <span class="sk-pill">Flagsmith</span>
+                <span class="sk-pill">Remote Config</span>
+                <span class="sk-pill">A/B Testing</span>
+                <span class="sk-pill">Consent</span>
+                <span class="sk-pill">Push</span>
+                <span class="sk-pill">Anti-fraud</span>
             </div>
         </div>
         <div class="skill-card reveal">
             <div class="sk-icon">⚙️</div>
-            <div class="sk-title">DevOps & Backend</div>
+            <div class="sk-title">CI/CD & Release</div>
             <div class="sk-items">
                 <span class="sk-pill">GitHub Actions</span>
-                <span class="sk-pill">CI/CD</span>
-                <span class="sk-pill">Python</span>
-                <span class="sk-pill">Node.js</span>
-                <span class="sk-pill">AWS/GCP</span>
-                <span class="sk-pill">REST APIs</span>
+                <span class="sk-pill">Self-hosted Runners</span>
+                <span class="sk-pill">Tests as Release Gate</span>
+                <span class="sk-pill">Multi-product Builds</span>
+                <span class="sk-pill">TestFlight</span>
+                <span class="sk-pill">Firebase App Distribution</span>
                 <span class="sk-pill">Git</span>
+            </div>
+        </div>
+        <div class="skill-card reveal">
+            <div class="sk-icon warm">🤖</div>
+            <div class="sk-title">AI-assisted Development</div>
+            <div class="sk-items">
+                <span class="sk-pill">Claude Code</span>
+                <span class="sk-pill">Codex</span>
+                <span class="sk-pill">MCP</span>
+                <span class="sk-pill">Automated PR Review</span>
+                <span class="sk-pill">Jira ↔ Figma ↔ Unity Tooling</span>
             </div>
         </div>
         <div class="skill-card reveal">
             <div class="sk-icon">👥</div>
             <div class="sk-title">Leadership</div>
             <div class="sk-items">
-                <span class="sk-pill">Team Building</span>
-                <span class="sk-pill">Agile/Scrum</span>
+                <span class="sk-pill">Cross-functional Teams</span>
+                <span class="sk-pill">Planning-first Process</span>
                 <span class="sk-pill">Code Review</span>
-                <span class="sk-pill">Architecture</span>
                 <span class="sk-pill">Mentoring</span>
+                <span class="sk-pill">Career Tracks</span>
                 <span class="sk-pill">Hiring</span>
-                <span class="sk-pill">Jira</span>
+                <span class="sk-pill">Agile / Jira</span>
             </div>
         </div>
     </div>
@@ -1261,85 +1514,104 @@
 <!-- PROJECTS -->
 <section id="projects">
     <div class="s-header reveal">
-        <span class="s-num">04</span>
+        <span class="s-num">05</span>
         <h2 class="s-title">Key Projects</h2>
         <div class="s-line"></div>
     </div>
     <div class="projects-grid">
         <div class="proj-card reveal">
             <div class="proj-top">
-                <span class="proj-type">▸ Flagship Title</span>
+                <span class="proj-type">▸ Platform · Gora Games</span>
                 <span class="proj-badge">LIVE</span>
             </div>
             <div class="proj-body">
-                <h3 class="proj-name">Playoff</h3>
+                <h3 class="proj-name">Skill-gaming Platform</h3>
                 <p class="proj-desc">
-                    Real-money skill-based gaming platform on iOS and Android. Millions of active players, 
-                    120+ analytics events, 50+ A/B tests, cross-app deep linking, and full ad mediation stack.
+                    Real-money skill-gaming platform and casual titles on Android and iOS. Several products
+                    ship from one layered Unity codebase, each with its own identity, SDK set and content;
+                    remote configuration with safe local fallbacks; CI/CD with tests as a release gate.
+                </p>
+                <div class="t-tech">
+                    <span class="tag">Unity</span>
+                    <span class="tag">VContainer</span>
+                    <span class="tag">MVVM</span>
+                    <span class="tag">Addressables</span>
+                    <span class="tag">AppLovin MAX</span>
+                    <span class="tag">Flagsmith</span>
+                </div>
+                <div class="proj-links">
+                    <a class="store-link" href="https://play.google.com/store/apps/details?id=ae.goragaming.playoff.blocks.game.make.earn.money.rewarded" target="_blank" rel="noopener">▶ Match 3: Win Real Money · 10M+</a>
+                    <a class="store-link" href="https://play.google.com/store/apps/details?id=app.boostplay" target="_blank" rel="noopener">▶ BoostPlay · 100K+</a>
+                </div>
+            </div>
+        </div>
+        <div class="proj-card reveal">
+            <div class="proj-top">
+                <span class="proj-type">▸ Merge · Next Epic</span>
+                <span class="proj-badge">LIVEOPS</span>
+            </div>
+            <div class="proj-body">
+                <h3 class="proj-name">Mystery Inn: Merge Adventure</h3>
+                <p class="proj-desc">
+                    Formerly Hotel Project: Merge Game. Casual merge title built on the studio's shared architecture: data-driven content on
+                    ScriptableObjects, state machines for game flow, and a Firebase LiveOps foundation
+                    with weekly events and seasonal content.
                 </p>
                 <div class="t-tech">
                     <span class="tag">Unity</span>
                     <span class="tag">Firebase</span>
-                    <span class="tag">AppLovin</span>
-                    <span class="tag">Deep Links</span>
                     <span class="tag">Remote Config</span>
+                    <span class="tag">IAP</span>
+                    <span class="tag">Ad Mediation</span>
+                </div>
+                <div class="proj-links">
+                    <a class="store-link" href="https://play.google.com/store/apps/details?id=com.rhinogames.mystery.hotel" target="_blank" rel="noopener">▶ Google Play</a>
                 </div>
             </div>
         </div>
         <div class="proj-card reveal">
             <div class="proj-top">
-                <span class="proj-type">▸ New Release</span>
-                <span class="proj-badge">SHIPPED</span>
+                <span class="proj-type">▸ Match-3 · Next Epic</span>
+                <span class="proj-badge">1M+ DL · 4.5★</span>
             </div>
             <div class="proj-body">
-                <h3 class="proj-name">Knife Playoff</h3>
+                <h3 class="proj-name">Match-3 Title</h3>
                 <p class="proj-desc">
-                    Single-player knife game with 20 levels, interstitial ads, deep link integration 
-                    with the main Playoff app, Firebase Analytics, and server-side revenue tracking.
-                </p>
-                <div class="t-tech">
-                    <span class="tag">Unity</span>
-                    <span class="tag">C#</span>
-                    <span class="tag">Firebase</span>
-                    <span class="tag">Ads SDK</span>
-                </div>
-            </div>
-        </div>
-        <div class="proj-card reveal">
-            <div class="proj-top">
-                <span class="proj-type">▸ Narrative Game</span>
-                <span class="proj-badge">IN DEV</span>
-            </div>
-            <div class="proj-body">
-                <h3 class="proj-name">Mystery Inn</h3>
-                <p class="proj-desc">
-                    Narrative-driven game with complex dialogue systems. Custom Python automation 
-                    pipeline converting narrative CSV files into Chat Data format for the game engine.
-                </p>
-                <div class="t-tech">
-                    <span class="tag">Unity</span>
-                    <span class="tag">Python</span>
-                    <span class="tag">Automation</span>
-                    <span class="tag">Narrative Design</span>
-                </div>
-            </div>
-        </div>
-        <div class="proj-card reveal">
-            <div class="proj-top">
-                <span class="proj-type">▸ Match-3</span>
-                <span class="proj-badge">1M+ DL</span>
-            </div>
-            <div class="proj-body">
-                <h3 class="proj-name">Match-3 Title (Next Epic)</h3>
-                <p class="proj-desc">
-                    Led end-to-end development from concept to launch. 1M+ downloads, 4.5★ rating, 
-                    optimized for 60 FPS on low-end devices. 60% draw call reduction through sprite atlasing.
+                    Led from concept to launch with a small cross-functional team and a monthly release cadence.
+                    Stable 60 FPS on 2 GB RAM phones through VFX budgets, dynamic resolution, sprite atlasing and batching.
                 </p>
                 <div class="t-tech">
                     <span class="tag">Unity</span>
                     <span class="tag">Profiler</span>
                     <span class="tag">VFX</span>
                     <span class="tag">Dynamic Resolution</span>
+                </div>
+                <div class="proj-links">
+                    <a class="store-link" href="https://apps.apple.com/us/app/merge-gnomes-vs-monster/id1480994144" target="_blank" rel="noopener">↗ App Store · Merge Gnomes Vs Monster</a>
+                </div>
+            </div>
+        </div>
+        <div class="proj-card reveal">
+            <div class="proj-top">
+                <span class="proj-type">▸ Hypercasual & Idle · Next Epic</span>
+                <span class="proj-badge">15+ TITLES · 3M+ DL</span>
+            </div>
+            <div class="proj-body">
+                <h3 class="proj-name">Hypercasual Portfolio</h3>
+                <p class="proj-desc">
+                    Two-week prototyping cycles: Hair Cut Idle, Food Truck Idle, Joy Center Tycoon,
+                    Famous Factory Tycoon, Cats Tower and more. Four projects later merged into one codebase.
+                </p>
+                <div class="t-tech">
+                    <span class="tag">Unity</span>
+                    <span class="tag">Rapid Prototyping</span>
+                    <span class="tag">Push Notifications</span>
+                </div>
+                <div class="proj-links">
+                    <a class="store-link" href="https://apps.apple.com/us/app/hair-cut-idle/id1455247740" target="_blank" rel="noopener">↗ App Store · Hair Cut Idle</a>
+                    <a class="store-link" href="https://apps.apple.com/us/app/food-truck-idle/id1447875787" target="_blank" rel="noopener">↗ App Store · Food Truck Idle</a>
+                    <a class="store-link" href="https://apps.apple.com/us/app/joy-center-tycoon/id1446747400" target="_blank" rel="noopener">↗ App Store · Joy Center Tycoon</a>
+                    <a class="store-link" href="https://apps.apple.com/us/app/famous-factory-tycoon/id1445427836" target="_blank" rel="noopener">↗ App Store · Famous Factory Tycoon</a>
                 </div>
             </div>
         </div>
